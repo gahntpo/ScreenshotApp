@@ -9,9 +9,22 @@ import SwiftUI
 
 @main
 struct ScreenshotAppApp: App {
+    
+    @StateObject var vm = ScreencaptureViewModel()
+    @AppStorage("menuBarExtraIsInserted") var menuBarExtraIsInserted = true
+    
     var body: some Scene {
-        WindowGroup {
-            ContentView()
+        MenuBarExtra("Screenshots", 
+                     systemImage: "photo.badge.plus",
+                     isInserted: $menuBarExtraIsInserted) {
+            MenubarContentView(vm: vm)
         }
+        .menuBarExtraStyle(.window)
+        
+        Settings {
+            SettingsView()
+        }
+        
+        
     }
 }

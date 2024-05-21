@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject var vm = ScreencaptureViewModel()
+    @ObservedObject var vm: ScreencaptureViewModel
     
     var body: some View {
         VStack {
@@ -21,9 +21,7 @@ struct ContentView: View {
                             .scaledToFit()
                             .onDrag({ NSItemProvider(object: image) })
                           //  .draggable(image)
-                        
                     }
-                    
                 }
             }
             
@@ -31,6 +29,7 @@ struct ContentView: View {
                 Button("Make a area screenshot") {
                     vm.takeScreenshot(for: .area)
                 }
+                .keyboardShortcut(KeyEquivalent("a"), modifiers: .command)
                 
                 Button("Make a window screenshot") {
                     vm.takeScreenshot(for: .window)
@@ -46,5 +45,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(vm: ScreencaptureViewModel())
 }
